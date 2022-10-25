@@ -29,3 +29,11 @@
     width: 70vw;
     border: 1px solid green;
 }
+
+.readbutton {
+    width: 60px;
+}
+
+th {
+    text-align: left;
+}
