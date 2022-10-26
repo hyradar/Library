@@ -1,7 +1,9 @@
 let myLibrary = [];
 
-let readbutton = document.querySelector('.readbutton');
-// readbutton.addEventListener("click", createRow());
+const theHobbit = Object.create(Book.prototype);
+theHobbit.name = 'The Hobbit';
+theHobbit.author = 'J.R.R. Tolkien';
+theHobbit.status = 'Read';
 
 function Book(name, author, status) {
     this.name = name;
@@ -9,14 +11,38 @@ function Book(name, author, status) {
     this.status = status;
 }
 
-const theHobbit = Object.create(Book.prototype);
-theHobbit.name = 'The Hobbit';
-theHobbit.author = 'J.R.R. Tolkien';
-theHobbit.status = 'Read';
+Book.prototype.appendTable = function() {
+    let myTable = document.querySelector('.bookshelf');
+    const rowNode = document.createElement("tr");
 
+    const bookData = document.createElement("td");
+    const authorData = document.createElement("td");
+    const statusData = document.createElement("td");
+    const deleteData = document.createElement("td");
+    const statusButton = document.createElement("button");
+    statusButton.innerHTML = this.status;
+    const deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "Delete";
 
-Book.prototype.addBookToLibrary = function() {
+    const newRow = myTable.appendChild(rowNode);
+    
+    newRow.append(bookData, authorData, statusData, deleteData);
+    bookData.innerHTML = this.name;
+    authorData.innerHTML = this.author;
+    statusData.append(statusButton);
+    deleteData.append(deleteButton);
+
+}
+
+Book.prototype.addToLibrary = function() {
     myLibrary.push(this);
+    console.log("adding "+ this.name +  " to library");
+}
+
+// Current Problem: Object still exists.
+Book.prototype.removeFromLibrary = function() {
+    myLibrary.pop(this);
+    console.log("removing " + this.name + " from library");
 }
 
 Book.prototype.changeStatus = function() {
@@ -29,35 +55,6 @@ Book.prototype.changeStatus = function() {
     }
 }
 
-
-theHobbit.addBookToLibrary();
-console.log(myLibrary);
-
-
-// Proof of concept for adding row
-/* function createRow() {
-
-    // Access to Button
-    let btn = document.querySelector('.readbutton');
-    btn.style.color = 'red';
-
-    // Get Table and Define Elements
-    let myTable = document.querySelector('.bookshelf');
-    const rowNode = document.createElement("tr");
-
-    const bookData = document.createElement("td");
-    const authorData = document.createElement("td");
-    const statusData = document.createElement("td");
-    const deleteData = document.createElement("td");
-
-    // Add Row 
-    const newRow = myTable.appendChild(rowNode);
-    
-    newRow.append(bookData, authorData, statusData, deleteData);
-    bookData.innerHTML = "book";
-    authorData.innerHTML = "author";
-    statusData.innerHTML = "status";
-    deleteData.innerHTML = "delete";
-    
-}
-*/
+theHobbit.appendTable();
+theHobbit.addToLibrary();
+theHobbit.removeFromLibrary();
