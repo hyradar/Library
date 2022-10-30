@@ -60,9 +60,34 @@ function updateTable(array) {
     } 
 }
 
-Book.prototype.addToLibrary = function() {
+Book.prototype.addDefaultBooks = function() {
     myLibrary.push(this);
     console.log("adding "+ this.name +  " to library");
+}
+
+
+function addToLibrary(event, myLibrary) {
+    event.preventDefault();
+    const form = document.querySelector('form');
+    let bookVal = form.elements['book'].value;
+    let authorVal = form.elements['author'].value;
+    let statusVal = form.elements['status'].value;
+
+    //Fix Capitalization of form status value
+    if (statusVal === 'notread') {
+        statusVal = 'Not Read';
+    }
+    else if (statusVal === 'read') {
+        statusVal = 'Read';
+    }
+    
+    let newBook = Object.create(Book.prototype);
+    newBook.name = bookVal;
+    newBook.author = authorVal;
+    newBook.status = statusVal;
+
+    myLibrary.push(newBook);
+    updateTable(myLibrary);
 }
 
 function removeFromLibrary(myLibrary, index) {
@@ -82,10 +107,16 @@ Book.prototype.changeStatus = function() {
     }
 }
 
-const form = document.querySelector('.form');
 
-theHobbit.addToLibrary();
-Hithchikers.addToLibrary();
-Fahrenheit451.addToLibrary();
+const subButton = document.querySelector('.submitbutton');
+subButton.addEventListener('click', function(){
+    addToLibrary(event, myLibrary);
+});
+
+
+theHobbit.addDefaultBooks();
+Hithchikers.addDefaultBooks();
+Fahrenheit451.addDefaultBooks();
 
 updateTable(myLibrary);
+console.log(myLibrary);
