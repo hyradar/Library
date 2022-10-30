@@ -86,6 +86,7 @@ function addToLibrary(event, myLibrary) {
     newBook.author = authorVal;
     newBook.status = statusVal;
 
+    form.reset();
     myLibrary.push(newBook);
     updateTable(myLibrary);
 }
