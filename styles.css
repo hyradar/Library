@@ -11,12 +11,10 @@
 
 .header {
     width: 70vw;
-    border: 1px solid red;
 }
 
 .submissionform {
     width: 70vw;
-    border: 1px solid blue ;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -27,12 +25,10 @@
 
 .bookshelf {
     width: 70vw;
-    border: 1px solid green;
 }
 
 .tableData {
     width: 70vw;
-    border: 1px solid blue;
 }
 
 .readbutton {
