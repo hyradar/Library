@@ -15,6 +15,11 @@ Fahrenheit451.name = 'Fahrenheit 451';
 Fahrenheit451.author = 'Ray Bradbury';
 Fahrenheit451.status = 'Not Read';
 
+const subButton = document.querySelector('.submitbutton');
+subButton.addEventListener('click', function(){
+    addToLibrary(event, myLibrary);
+});
+
 function Book(name, author, status) {
     this.name = name;
     this.author = author;
@@ -49,7 +54,9 @@ function updateTable(array) {
         bookData.innerHTML = array[i].name;
         authorData.innerHTML = array[i].author;
         statusButton.innerHTML = array[i].status;
-        //add functionality to update read button
+        statusButton.addEventListener('click', function (event) {
+            changeStatus(myLibrary, this);
+        }); 
         deleteButton.innerHTML = 'Delete';
         deleteButton.addEventListener('click', function(){
             removeFromLibrary(myLibrary, deleteButton.dataset.index)
@@ -57,14 +64,9 @@ function updateTable(array) {
         
         //Use this index to know which book in the array to delete
         deleteButton.dataset.index = i;
+        statusButton.dataset.index = i;
     } 
 }
-
-Book.prototype.addDefaultBooks = function() {
-    myLibrary.push(this);
-    console.log("adding "+ this.name +  " to library");
-}
-
 
 function addToLibrary(event, myLibrary) {
     event.preventDefault();
@@ -98,26 +100,27 @@ function removeFromLibrary(myLibrary, index) {
     updateTable(myLibrary);
 }
 
-Book.prototype.changeStatus = function() {
+function changeStatus(myLibrary, button) {
 
-    if (this.status === "Read") {
-        this.status = "Unread";
+    //get button index
+    const index = button.dataset.index;
+
+    //Changes status
+    if (myLibrary[index].status === "Read") {
+        myLibrary[index].status = "Not Read";
     }
     else {
-        this.status = "Read";
+        myLibrary[index].status = "Read";
     }
+
+    //change button HTML based on new status
+    button.innerHTML = myLibrary[index].status;
 }
 
+//Program Begins
 
-const subButton = document.querySelector('.submitbutton');
-subButton.addEventListener('click', function(){
-    addToLibrary(event, myLibrary);
-});
-
-
-theHobbit.addDefaultBooks();
-Hithchikers.addDefaultBooks();
-Fahrenheit451.addDefaultBooks();
+myLibrary.push(theHobbit);
+myLibrary.push(Hithchikers);
+myLibrary.push(Fahrenheit451);
 
 updateTable(myLibrary);
-console.log(myLibrary);
