@@ -1,29 +1,10 @@
-let myLibrary = [];
 
-const theHobbit = Object.create(Book.prototype);
-theHobbit.name = 'The Hobbit';
-theHobbit.author = 'J.R.R. Tolkien';
-theHobbit.status = 'Read';
-
-const Hithchikers = Object.create(Book.prototype);
-Hithchikers.name = 'Hitchhikers Guide to the Galaxy';
-Hithchikers.author = 'Douglas Adams';
-Hithchikers.status = 'Read';
-
-const Fahrenheit451 = Object.create(Book.prototype);
-Fahrenheit451.name = 'Fahrenheit 451';
-Fahrenheit451.author = 'Ray Bradbury';
-Fahrenheit451.status = 'Not Read';
-
-const subButton = document.querySelector('.submitbutton');
-subButton.addEventListener('click', function(){
-    addToLibrary(event, myLibrary);
-});
-
-function Book(name, author, status) {
-    this.name = name;
-    this.author = author;
-    this.status = status;
+class Book {
+    constructor(name, author, status) {
+        this.name = name;
+        this.author = author;
+        this.status = status;
+    }
 }
 
 function updateTable(array) {
@@ -83,10 +64,7 @@ function addToLibrary(event, myLibrary) {
         statusVal = 'Read';
     }
     
-    let newBook = Object.create(Book.prototype);
-    newBook.name = bookVal;
-    newBook.author = authorVal;
-    newBook.status = statusVal;
+    let newBook = new Book(bookVal, authorVal, statusVal);
 
     form.reset();
     myLibrary.push(newBook);
@@ -118,6 +96,18 @@ function changeStatus(myLibrary, button) {
 }
 
 //Program Begins
+
+let myLibrary = [];
+
+const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 'Read');
+const Hithchikers = new Book('Hitchhikers Guide to the Galaxy', 'Douglas Adams', 'Read');
+const Fahrenheit451 = new Book('Fahrenheit 451', 'Ray Bradbury', 'Not Read');
+
+const subButton = document.querySelector('.submitbutton');
+subButton.addEventListener('click', function(){
+    addToLibrary(event, myLibrary);
+});
+
 
 myLibrary.push(theHobbit);
 myLibrary.push(Hithchikers);
